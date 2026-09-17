@@ -9,13 +9,15 @@ const files=new Set(['controller.html','controller.js','app.js','README.md','sty
 export function createServer({adapter,port=47831,timeoutMs=20000}={}) {
  const token=randomBytes(32).toString('hex'),paired=new Set();let busy=false;let rateStart=Date.now(),rateCount=0;
  const local=`http://127.0.0.1:${port}`;
- const authenticated=req=>{const v=req.headers['x-session-token'];return typeof v==='string'&&v.length===token.length&&timingSafeEqual(Buffer.from(v),Buffer.from(token));};
+ const tokenBytes=Buffer.from(token);
+ const authenticated=req=>{const v=req.headers['x-session-token'];if(typeof v!=='string'||v.length!==token.length)return false;const bytes=Buffer.from(v);return bytes.length===tokenBytes.length&&timingSafeEqual(bytes,tokenBytes);};
  const server=http.createServer(async(req,res)=>{
   const send=(status,data)=>{if(res.destroyed)return;res.writeHead(status,{'Content-Type':'application/json','Cache-Control':'no-store'});res.end(JSON.stringify(data));};
   const fail=(status,code,message)=>send(status,{error:{code,message}});
   res.setHeader('X-Content-Type-Options','nosniff');res.setHeader('Referrer-Policy','no-referrer');
   if(req.headers.host!==`127.0.0.1:${port}`)return fail(403,'host','Host rejected');
-  const origin=req.headers.origin;const url=new URL(req.url,local);const extensionId=req.headers['x-extension-id']||url.searchParams.get('extensionId');const extensionOrigin=extensionId&&/^[a-p]{32}$/.test(extensionId)?`chrome-extension://${extensionId}`:null;
+  let url;try{if(typeof req.url!=='string'||!req.url.startsWith('/')||req.url.startsWith('//')||req.url.includes('\\'))throw Error('target');url=new URL(req.url,local);if(url.origin!==local)throw Error('target');}catch{return fail(400,'schema','Invalid request target');}
+  const origin=req.headers.origin;const extensionId=req.headers['x-extension-id']||url.searchParams.get('extensionId');const extensionOrigin=extensionId&&/^[a-p]{32}$/.test(extensionId)?`chrome-extension://${extensionId}`:null;
   if(extensionId&&!extensionOrigin)return fail(400,'schema','Invalid extension ID');
   if(extensionOrigin&&origin&&origin!==extensionOrigin)return fail(403,'origin','Extension origin mismatch');
   const ext=typeof origin==='string'&&/^chrome-extension:\/\/[a-p]{32}$/.test(origin);
