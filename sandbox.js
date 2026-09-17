@@ -1,0 +1,1 @@
+function route(){document.body.classList.toggle('docs',location.hash==='#docs');window.scrollTo(0,0)}window.addEventListener('hashchange',route);document.querySelectorAll('[data-route]').forEach(b=>b.addEventListener('click',()=>location.hash=b.dataset.route==='docs'?'docs':'home'));route();

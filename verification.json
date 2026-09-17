@@ -1,0 +1,77 @@
+{
+  "checkedAt": "2026-09-17",
+  "model": "typesafe-ai/jev",
+  "provider": "vercel-ai-gateway",
+  "gatewayContract": "Vercel AI Gateway native evaluation; zero-data-retention is opt-in and depends on account entitlement",
+  "tests": {
+    "command": "npm test",
+    "passed": 13,
+    "failed": 0
+  },
+  "syntheticLiveHttp": {
+    "context": "Public synthetic demo, Docs link and none choice",
+    "httpStatus": 200,
+    "choice": "e1",
+    "chosenProbability": 0.92,
+    "confidence": 0.83,
+    "inputTokens": 361,
+    "outputTokens": 33,
+    "totalTokens": 394,
+    "decisionMs": 558
+  },
+  "controllerBrowserVerification": {
+    "context": "Synthetic public teaching sandbox, browser UI verification by root agent",
+    "click": {
+      "verified": true,
+      "decisionMs": 531
+    },
+    "back": {
+      "verified": true,
+      "decisionMs": 938
+    },
+    "fill": {
+      "verified": true,
+      "decisionMs": 446
+    },
+    "repeatClick": {
+      "verified": true,
+      "decisionMs": 555,
+      "actionMs": 2,
+      "chosenProbability": 0.98
+    },
+    "transientFailure": {
+      "observed": true,
+      "category": "Gateway unavailable",
+      "recoveredBy": "Manual command repeat"
+    },
+    "fillAbstention": {
+      "context": "Public Docs sandbox input",
+      "decisionMs": 506,
+      "noneProbability": 0.63,
+      "fieldProbability": 0.36,
+      "observedFalseNegative": true
+    }
+  },
+  "externalExtension": {
+    "verified": true,
+    "status": "installed, paired, external click verified",
+    "context": "Public Wikipedia landing page to English Wikipedia",
+    "action": "click English",
+    "chosenProbability": 0.96,
+    "decisionMs": 611,
+    "actionMs": 30,
+    "resultTitle": "Wikipedia, the free encyclopedia",
+    "additionalPublicClick": {
+      "context": "Public EternalBlue target",
+      "decisionMs": 863,
+      "verified": true
+    }
+  },
+  "voiceRecognition": {
+    "verified": true,
+    "status": "Russian speech recognition observed in Chrome with user-enabled microphone",
+    "fullVoiceToActionVerified": false,
+    "note": "No raw transcript retained"
+  },
+  "privacy": "No credentials, session tokens, raw provider responses, or private page data included"
+}
