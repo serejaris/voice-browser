@@ -5,8 +5,9 @@
   "gatewayContract": "Vercel AI Gateway native evaluation; zero-data-retention is opt-in and depends on account entitlement",
   "tests": {
     "command": "npm test",
-    "passed": 13,
-    "failed": 0
+    "passed": 14,
+    "failed": 0,
+    "regression": "Malformed HTTP target and multibyte session token rejected; server remains responsive"
   },
   "syntheticLiveHttp": {
     "context": "Public synthetic demo, Docs link and none choice",
